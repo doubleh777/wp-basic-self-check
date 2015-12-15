@@ -28,7 +28,7 @@ public class QuestionDaoTest {
 		QuestionDao dut = new QuestionDao();
 		dut.insert(expected);
 		
-		List<Question> questions = dut.findAll();
+		List<Question> questions = dut.findAllByPage();
 		assertTrue(questions.size() > 0);
 	}
 }

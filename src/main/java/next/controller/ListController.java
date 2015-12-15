@@ -17,7 +17,7 @@ public class ListController extends AbstractController {
 	@Override
 	public ModelAndView execute(HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-		questions = questionDao.findAll();
+		questions = questionDao.findAllByPage();
 		
 		ModelAndView mav = jstlView("list.jsp");
 		mav.addObject("questions", questions);

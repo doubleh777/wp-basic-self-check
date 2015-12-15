@@ -95,7 +95,7 @@
 <body>
 	<div id ="main">
 	    <div id="title">
-	        <h1><a href="/list.next">Java Web Programming 실습</a></h2>
+	        <h1><a href="/list.next">Web Programming 실습</a></h2>
 	        <a id="qes" href="/form.next">질문하기</a>
 	    </div>
 	    <ul id="content">    

@@ -22,10 +22,10 @@ public class QuestionDao {
 				question.getCountOfComment());
 	}
 	
-	public List<Question> findAll() {
+	public List<Question> findAllByPage() {
 		JdbcTemplate jdbcTemplate = new JdbcTemplate();
 		String sql = "SELECT questionId, writer, title, createdDate, countOfComment FROM QUESTIONS "
-				+ "order by questionId desc";
+				+ "ORDER BY questionId DESC LIMIT ?, ?";
 		
 		RowMapper<Question> rm = new RowMapper<Question>() {
 			@Override
@@ -38,7 +38,9 @@ public class QuestionDao {
 			
 		};
 		
-		return jdbcTemplate.query(sql, rm);
+		int offset = 0;
+		int limit = 5;
+		return jdbcTemplate.query(sql, rm, offset, limit);
 	}
 
 	public Question findById(long questionId) {
