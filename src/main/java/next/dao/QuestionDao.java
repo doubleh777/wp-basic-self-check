@@ -10,6 +10,19 @@ import core.jdbc.JdbcTemplate;
 import core.jdbc.RowMapper;
 
 public class QuestionDao {
+	
+	public static final int INITIAL_OFFSET = 0;
+	public static final int INTIAL_LIMIT = 5;
+	public static final int DEFALUT_LIMIT = 10;
+
+	
+	private static QuestionDao instance;
+	private QuestionDao(){};
+	
+	public static QuestionDao getInstance(){
+		if(instance == null) return new QuestionDao();
+		return instance;
+	}
 
 	public void insert(Question question) {
 		JdbcTemplate jdbcTemplate = new JdbcTemplate();
@@ -22,7 +35,7 @@ public class QuestionDao {
 				question.getCountOfComment());
 	}
 	
-	public List<Question> findAllByPage() {
+	public List<Question> findAllByPage(int lastQuestionId, int limit) {
 		JdbcTemplate jdbcTemplate = new JdbcTemplate();
 		String sql = "SELECT questionId, writer, title, createdDate, countOfComment FROM QUESTIONS "
 				+ "ORDER BY questionId DESC LIMIT ?, ?";
@@ -38,9 +51,15 @@ public class QuestionDao {
 			
 		};
 		
-		int offset = 0;
-		int limit = 5;
+		int offset = lastQuestionId;
 		return jdbcTemplate.query(sql, rm, offset, limit);
+	}
+	
+	public void deleteById(long questionId){
+		JdbcTemplate jdbcTemplate = new JdbcTemplate();
+		String sql = "DELETE FROM QUESTIONS WHERE questionId = ?";
+		
+		jdbcTemplate.update(sql, questionId);
 	}
 
 	public Question findById(long questionId) {
@@ -62,4 +81,5 @@ public class QuestionDao {
 		
 		return jdbcTemplate.queryForObject(sql, rm, questionId);
 	}
+
 }

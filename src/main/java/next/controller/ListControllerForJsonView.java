@@ -1,0 +1,28 @@
+package next.controller;
+
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import core.mvc.AbstractController;
+import core.mvc.Controller;
+import core.mvc.ModelAndView;
+import next.dao.QuestionDao;
+import next.model.Question;
+
+public class ListControllerForJsonView extends AbstractController {
+	
+	@Override
+	public ModelAndView execute(HttpServletRequest request, HttpServletResponse response)
+			throws Exception {
+		QuestionDao questionDao = QuestionDao.getInstance();
+		List<Question> questions;
+		questions = questionDao.findAllByPage();
+		
+		ModelAndView mav = jsonView();
+		mav.addObject("questions", questions);
+		return mav;
+	}
+}
+

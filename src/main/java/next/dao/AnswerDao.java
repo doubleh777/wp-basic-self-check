@@ -6,11 +6,20 @@ import java.sql.Timestamp;
 import java.util.List;
 
 import next.model.Answer;
+import next.model.Question;
 import core.jdbc.JdbcTemplate;
 import core.jdbc.RowMapper;
 
 public class AnswerDao {
 
+	private AnswerDao(){};
+	private static AnswerDao instance;
+	
+	public static AnswerDao getInstance(){
+		if(instance == null) return new AnswerDao();
+		return instance;
+	}
+	
 	public void insert(Answer answer) {
 		JdbcTemplate jdbcTemplate = new JdbcTemplate();
 		String sql = "INSERT INTO ANSWERS (writer, contents, createdDate, questionId) VALUES (?, ?, ?, ?)";
